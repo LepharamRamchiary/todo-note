@@ -21,13 +21,10 @@ app.use(express.json({ limit: "20kb" }));
 //url data
 app.use(express.urlencoded({ extended: true, limit: "20kb" }));
 
-
-
-
 // routes import
-
+import todoRouter from "./routes/todo.routes.js";
 
 // routes declaration
-
+app.use("/api/v1/todo", todoRouter);
 
 export { app };
