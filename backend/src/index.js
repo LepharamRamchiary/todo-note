@@ -1,10 +1,20 @@
-import express from 'express';
+import dotenv from "dotenv";
+import connectDB from "./db/index.js";
+import { app } from "./app.js";
 
-const app = express();
-const PORT = 3000;
 
-
-// Start the server
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+dotenv.config({
+  path: ".env",
 });
+
+
+connectDB()
+  .then(() => {
+    app.listen(process.env.PORT || 4000, () => {
+      console.log(`Server is running at port: ${process.env.PORT}`);
+      console.log(`Swagger docs available at http://localhost:${process.env.PORT}/api-docs`);
+    });
+  })
+  .catch((err) => {
+    console.log("MongoDB connection failed !!", err);
+  });
